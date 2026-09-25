@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài Tập Buổi 4</title>
+    <style>
+        :root {
+            --bg-product: rgb(151, 151, 246);
+            --title-product: rgb(0, 0, 163);
+            --button-text: #ffffff;
+            --button-bg: rgb(30, 30, 124);
+            --theme-bg: #ffffff;
+            --theme-text: #000000;
+        }
+
+        body:has(#color option[value="red"]:checked) {
+            --bg-product: rgb(255, 204, 204);
+            --title-product: rgb(180, 0, 0);
+            --button-bg: rgb(139, 0, 0);
+        }
+
+        body:has(#color option[value="green"]:checked) {
+            --bg-product: rgb(200, 200, 200);
+            --title-product: rgb(40, 40, 40);
+            --button-bg: rgb(20, 20, 20);
+        }
+
+        body:has(#color option[value="yellow"]:checked) {
+            --bg-product: rgb(235, 235, 235);
+            --title-product: rgb(90, 90, 90);
+            --button-bg: rgb(100, 100, 100);
+        }
+
+        body:has(#dark-mode:checked) {
+            --theme-bg: #000000;
+            --theme-text: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .theme-mode {
+            background-color: var(--theme-bg);
+            color: var(--theme-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .d-flex {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            width: 200px;
+            border: 1px solid black;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: var(--bg-product);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            animation-name: animationShowProduct;
+            animation-duration: 0.5s;
+        }
+
+        .product:hover {
+            transform: scale(1.03);
+        }
+
+        .product .title {
+            color: var(--title-product);
+            margin: 10px 0 5px 0;
+            transition: color 0.3 ease;
+        }
+
+        .button {
+            width: 150px;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: var(--button-text);
+            background-color: var(--button-bg);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .button-hover:hover {
+            transform: scale(1.05);
+        }
+
+        .welcome-title {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes colorPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes animationShowProduct {
+            0% {
+                transform: translateY(-200px) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-100px) rotate(5deg);
+            }
+
+            50% {
+                transform: translateY(-50px) rotate(10deg);
+            }
+
+            75% {
+                transform: translateY(-25px) rotate(5deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        @media screen and (max-width: 1023px) {
+            .product {
+                width: calc(50% - 10px);
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .product {
+                width: 100%;
+            }
+
+            .d-flex {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body class="theme-mode">
+    <h1 class="welcome-title animate__animated animate__bounceIn">Chào mừng bạn đến với website</h1>
+
+    <div class="d-flex">
+        <h3>Chọn màu sản phẩm:</h3>
+        <select id="color" name="color">
+            <option value="blue" selected>Băng thanh</option>
+            <option value="red">Đỏ</option>
+            <option value="green">Đen</option>
+            <option value="yellow">Bạc</option>
+        </select>
+
+        <label>
+            <input type="checkbox" id="dark-mode" />
+            Chế độ tối
+        </label>
+    </div>
+
+    <div>
+        <h3>Danh sách sản phẩm</h3>
+        <div class="product-container">
+            <div class="product">
+                <img src="https://cdn2.fptshop.com.vn/unsafe/750x0/filters:format(webp):quality(75)/iphone_18_pro_max_do_44e704f6da.png"
+                    width="100%" height="auto" />
+                <h4 class="title">iPhone 18 Pro Max - Đỏ Burdurnay</h4>
+                <p>Giá: 80.000.000 VNĐ</p>
+                <button class="button button-hover">Thêm vào giỏ hàng</button>
+            </div>
+            <div class="product">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzABUi7EmGVbYIIGpy9qYA2PFqRaErkjarNzN2yLBujg&s=1024"
+                    width="100%" height="auto" />
+                <h4 class="title">iPhone 18 Pro Max - Băng thanh</h4>
+                <p>Giá: 80.000.000 VNĐ</p>
+                <button class="button button-hover">Thêm vào giỏ hàng</button>
+            </div>
+            <div class="product">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRRzVybQ2Kd0EnIPCjesJ8piVKHOIvbpUcKfRAhi7a9A&s=1024"
+                    width="100%" height="auto" />
+                <h4 class="title">iPhone 18 Pro Max - Đen</h4>
+                <p>Giá: 85.000.000 VNĐ</p>
+                <button class="button button-hover">Thêm vào giỏ hàng</button>
+            </div>
+            <div class="product">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5gtwqV9BLKfNdHL3_Q6cAERZx6X37_knCN99hZsgl6w&s=1024"
+                    width="100%" height="auto" />
+                <h4 class="title">iPhone 18 Pro Max - Bạc</h4>
+                <p>Giá: 80.000.000 VNĐ</p>
+                <button class="button button-hover">Thêm vào giỏ hàng</button>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+
+</html>
