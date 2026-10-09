@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trang test dang nhap - dang ky </title>
+    <meta name="theme-color" content="#f6f4ef">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --ink:#202a26; --muted:#747b73; --paper:#f6f4ef; --white:#fffefa; --green:#345d4e; --line:#dedfd7; --accent:#d78668; }
+        * { box-sizing:border-box; }
+        body { margin:0; min-height:100vh; background:var(--paper); color:var(--ink); font-family:"DM Sans",sans-serif; }
+        button,input { font:inherit; }
+        .auth-layout { min-height:100vh; display:grid; grid-template-columns:minmax(420px,.92fr) minmax(480px,1.08fr); }
+        .form-side { display:flex; flex-direction:column; padding:34px clamp(28px,7vw,104px) 24px; animation:arrive 650ms ease both; }
+        .brand { display:inline-flex; align-items:center; gap:10px; width:fit-content; color:var(--ink); text-decoration:none; font-size:20px; font-weight:700; }
+        .brand-mark { width:32px; height:32px; display:grid; place-items:center; border-radius:50% 50% 50% 12px; background:var(--green); color:white; font:21px "Playfair Display",serif; }
+        .form-content { width:min(100%,410px); margin:auto; padding:44px 0; }
+        .eyebrow { margin:0 0 12px; color:var(--green); font-size:12px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; }
+        h1 { margin:0; font:600 clamp(36px,4vw,48px)/1.12 "Playfair Display",Georgia,serif; }
+        .intro { margin:13px 0 26px; color:var(--muted); font-size:15px; line-height:1.6; }
+        .mode-switch { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px; margin-bottom:24px; border:1px solid var(--line); border-radius:8px; background:#eeede7; }
+        .mode-switch button { min-height:42px; border:0; border-radius:5px; background:transparent; color:var(--muted); cursor:pointer; font-size:14px; font-weight:600; }
+        .mode-switch button[aria-selected="true"] { background:var(--white); color:var(--ink); box-shadow:0 1px 4px #202a2612; }
+        .field { margin-bottom:16px; }
+        .field label { display:block; margin-bottom:7px; font-size:13px; font-weight:600; }
+        .input-wrap { position:relative; }
+        .field input { width:100%; height:48px; padding:0 14px; border:1px solid var(--line); border-radius:5px; outline:none; background:var(--white); color:var(--ink); }
+        .field input:focus { border-color:var(--green); box-shadow:0 0 0 3px #345d4e1a; }
+        .field input::placeholder { color:#a3a69d; }
+        .input-wrap input { padding-right:76px; }
+        .reveal-password { position:absolute; top:50%; right:12px; transform:translateY(-50%); padding:5px 0 5px 8px; border:0; background:transparent; color:var(--green); cursor:pointer; font-size:12px; font-weight:700; }
+        .form-options { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:2px 0 20px; font-size:12px; }
+        .remember { display:inline-flex; align-items:center; gap:8px; color:var(--muted); cursor:pointer; }
+        .remember input { accent-color:var(--green); }
+        .text-link,.legal a { color:var(--green); font-weight:700; text-decoration:none; }
+        .text-link:hover,.legal a:hover { text-decoration:underline; }
+        .submit-button { width:100%; min-height:49px; border:0; border-radius:5px; background:var(--green); color:white; cursor:pointer; font-size:14px; font-weight:700; transition:background 160ms ease,transform 160ms ease; }
+        .submit-button:hover { background:#274638; transform:translateY(-1px); }
+        button:focus-visible,a:focus-visible { outline:3px solid #d7866870; outline-offset:3px; }
+        .form-message { min-height:20px; margin:12px 0 0; color:#274638; font-size:12px; line-height:1.5; }
+        .divider { display:flex; align-items:center; gap:12px; margin:17px 0; color:#92958d; font-size:11px; }
+        .divider::before,.divider::after { content:""; height:1px; flex:1; background:var(--line); }
+        .social-button { width:100%; height:46px; display:flex; justify-content:center; align-items:center; gap:10px; border:1px solid var(--line); border-radius:5px; background:transparent; color:var(--ink); cursor:pointer; font-size:13px; font-weight:600; }
+        .social-button:hover { background:#eeede7; }
+        .google-mark { color:#4285f4; font-size:17px; font-weight:700; }
+        .legal { margin:14px 0 0; color:var(--muted); font-size:11px; line-height:1.6; text-align:center; }
+        .legal a { text-decoration:underline; text-underline-offset:2px; }
+        .terms-consent { display:flex; align-items:flex-start; gap:9px; margin:0 0 16px; color:var(--muted); font-size:12px; line-height:1.55; }
+        .terms-consent input { flex:0 0 auto; margin:3px 0 0; accent-color:var(--green); }
+        .otp-panel { padding-top:12px; }
+        .otp-panel p { color:var(--muted); font-size:14px; line-height:1.6; }
+        .otp-panel .field input { text-align:center; font-size:24px; font-weight:700; letter-spacing:8px; }
+        .otp-actions { display:flex; justify-content:space-between; gap:12px; margin-top:16px; font-size:12px; }
+        .otp-actions button { padding:0; border:0; background:none; color:var(--green); cursor:pointer; font:inherit; font-weight:700; }
+        .footer-note { color:var(--muted); font-size:11px; text-align:center; }
+        .photo-side { position:relative; min-height:100vh; overflow:hidden; background:#74816c; color:white; }
+        .photo-side::before { position:absolute; inset:0; content:""; background:linear-gradient(180deg,#15241c10 25%,#15241caa 100%),url("https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1800&q=85") center/cover; }
+        .photo-copy { position:absolute; right:clamp(30px,7vw,100px); bottom:clamp(44px,9vh,100px); left:clamp(30px,7vw,100px); max-width:540px; animation:arrive 850ms 120ms ease both; }
+        .photo-kicker { display:flex; align-items:center; gap:9px; margin:0 0 17px; color:#f3d2c3; font-size:11px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; }
+        .photo-kicker::before { content:""; width:27px; height:1px; background:var(--accent); }
+        .photo-copy h2 { max-width:500px; margin:0 0 14px; font:500 clamp(36px,4vw,54px)/1.1 "Playfair Display",Georgia,serif; }
+        .photo-copy p:last-child { max-width:390px; margin:0; color:#ffffffd6; font-size:14px; line-height:1.7; }
+        [hidden] { display:none!important; }
+        @keyframes arrive { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        @media(max-width:900px) { .auth-layout { grid-template-columns:minmax(360px,1fr) minmax(300px,.8fr); } .form-side { padding-right:36px; padding-left:36px; } .photo-copy { right:34px; left:34px; } }
+        @media(max-width:700px) { .auth-layout { display:block; } .form-side { min-height:100vh; padding:24px 24px 18px; } .form-content { width:min(100%,430px); padding:42px 0; } .photo-side { display:none; } h1 { font-size:40px; } }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+    </style>
+</head>
+<body>
+    <main class="auth-layout">
+        <section class="form-side" aria-label="Tài khoản">
+            <a class="brand" href="#" aria-label="Nếp, trang chủ"><span class="brand-mark" aria-hidden="true">n</span><span>nếp</span></a>
+            <div class="form-content">
+                <p class="eyebrow">Chào bạn, rất vui được gặp</p>
+                <h1 id="form-title">Đăng nhập</h1>
+                <p class="intro" id="form-intro">Tiếp tục hành trình của bạn cùng Nếp.</p>
+                <div class="mode-switch" id="mode-switch" role="tablist" aria-label="Chọn thao tác">
+                    <button type="button" role="tab" aria-selected="true" aria-controls="auth-form" data-mode="login">Đăng nhập</button>
+                    <button type="button" role="tab" aria-selected="false" aria-controls="auth-form" data-mode="signup">Tạo tài khoản</button>
+                </div>
+                <form id="auth-form">
+                    <div class="field" id="name-field" hidden><label for="full-name">Họ và tên</label><input id="full-name" name="name" type="text" autocomplete="name" placeholder="Nguyễn Minh Anh" minlength="2"></div>
+                    <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ban@example.com" required></div>
+                    <div class="field"><label for="password">Mật khẩu</label><div class="input-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Ít nhất 8 ký tự" minlength="8" required><button class="reveal-password" type="button" aria-label="Hiện mật khẩu" aria-pressed="false">Hiện</button></div></div>
+                    <div class="field" id="confirm-field" hidden><label for="confirm-password">Nhập lại mật khẩu</label><div class="input-wrap"><input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" minlength="8"><button class="reveal-password" type="button" aria-label="Hiện mật khẩu" aria-pressed="false">Hiện</button></div></div>
+                    <label class="terms-consent" id="terms-field" hidden><input id="accept-terms" type="checkbox" required><span>Tôi đồng ý với <a href="#terms">Điều khoản sử dụng</a> và <a href="#privacy">Chính sách bảo mật</a>.</span></label>
+                    <div class="form-options" id="login-options"><label class="remember"><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label><a class="text-link" href="#forgot-password">Quên mật khẩu?</a></div>
+                    <button class="submit-button" id="submit-button" type="submit">Đăng nhập</button>
+                    <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+                </form>
+                <section class="otp-panel" id="otp-panel" hidden aria-labelledby="otp-title">
+                    <h2 id="otp-title">Xác minh email</h2>
+                    <p>Nhập mã gồm 6 chữ số vừa được gửi đến <strong id="otp-email"></strong>.</p>
+                    <form id="otp-form">
+                        <div class="field"><label for="otp-code">Mã xác minh</label><input id="otp-code" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" placeholder="000000" required></div>
+                        <button class="submit-button" type="submit" id="verify-button">Xác minh email</button>
+                        <p class="form-message" id="otp-message" role="status" aria-live="polite"></p>
+                    </form>
+                    <div class="otp-actions"><button type="button" id="resend-code">Gửi lại mã</button><button type="button" id="cancel-verification">Quay lại</button></div>
+                </section>
+                <div class="divider" id="divider">hoặc tiếp tục với</div>
+                <button class="social-button" id="social-button" type="button"><span class="google-mark" aria-hidden="true">G</span> Tiếp tục với Google</button>
+            </div>
+            <p class="footer-note">© 2026 Nếp. Một nhịp sống dịu dàng hơn.</p>
+        </section>
+        <aside class="photo-side" aria-label="Không gian sống ấm áp"><div class="photo-copy"><p class="photo-kicker">Sống chậm, sống chất</p><h2>Một nơi nhỏ để những điều tốt đẹp bắt đầu.</h2><p>Ghé vào không gian của riêng bạn, nơi cảm hứng và những lựa chọn tinh tế luôn chờ đón.</p></div></aside>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        (() => {
+        const form = document.querySelector("#auth-form");
+        const otpForm = document.querySelector("#otp-form");
+        const tabs = [...document.querySelectorAll("[data-mode]")];
+        const password = document.querySelector("#password");
+        const confirmPassword = document.querySelector("#confirm-password");
+        const supabaseConfig = window.SUPABASE_CONFIG || {};
+        const isConfigured = Boolean(supabaseConfig.url && supabaseConfig.anonKey);
+        const authClient = isConfigured
+            ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey)
+            : null;
+        let currentMode = "login";
+        let pendingEmail = "";
+        let busy = false;
+
+        function setMessage(target, message, isError = false) {
+            target.textContent = message;
+            target.style.color = isError ? "#a43f32" : "#274638";
+        }
+
+        function setBusy(isBusy, button) {
+            busy = isBusy;
+            button.disabled = isBusy;
+            button.textContent = isBusy ? "Đang xử lý..." : button.dataset.label;
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            const isSignup = mode === "signup";
+            document.querySelector("#form-title").textContent = isSignup ? "Tạo tài khoản" : "Đăng nhập";
+            document.querySelector("#form-intro").textContent = isSignup ? "Bắt đầu hành trình của bạn cùng Nếp." : "Tiếp tục hành trình của bạn cùng Nếp.";
+            document.querySelector("#submit-button").textContent = isSignup ? "Tạo tài khoản" : "Đăng nhập";
+            document.querySelector("#name-field").hidden = !isSignup;
+            document.querySelector("#confirm-field").hidden = !isSignup;
+            document.querySelector("#terms-field").hidden = !isSignup;
+            document.querySelector("#accept-terms").required = isSignup;
+            document.querySelector("#login-options").hidden = isSignup;
+            document.querySelector("#divider").hidden = isSignup;
+            document.querySelector("#social-button").hidden = isSignup;
+            document.querySelector("#full-name").required = isSignup;
+            confirmPassword.required = isSignup;
+            password.autocomplete = isSignup ? "new-password" : "current-password";
+            document.querySelector("#form-message").textContent = "";
+            document.querySelector("#otp-message").textContent = "";
+            document.querySelector("#otp-panel").hidden = true;
+            document.querySelector("#mode-switch").hidden = false;
+            form.hidden = false;
+            tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.mode === mode)));
+        }
+
+        tabs.forEach((tab) => tab.addEventListener("click", () => setMode(tab.dataset.mode)));
+        document.querySelectorAll(".reveal-password").forEach((button) => button.addEventListener("click", () => {
+            const input = button.parentElement.querySelector("input");
+            const isVisible = input.type === "text";
+            input.type = isVisible ? "password" : "text";
+            button.textContent = isVisible ? "Hiện" : "Ẩn";
+            button.setAttribute("aria-label", isVisible ? "Hiện mật khẩu" : "Ẩn mật khẩu");
+            button.setAttribute("aria-pressed", String(!isVisible));
+        }));
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            if (busy) return;
+            const message = document.querySelector("#form-message");
+            const submitButton = document.querySelector("#submit-button");
+            submitButton.dataset.label = currentMode === "signup" ? "Tạo tài khoản" : "Đăng nhập";
+
+            if (!authClient) {
+                setMessage(message, "Chưa cấu hình Supabase. Hãy điền URL và publishable key trong supabase-config.js.", true);
+                return;
+            }
+
+            if (currentMode === "signup" && password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("Mật khẩu nhập lại chưa khớp.");
+                confirmPassword.reportValidity();
+                confirmPassword.addEventListener("input", () => confirmPassword.setCustomValidity(""), { once: true });
+                return;
+            }
+
+            setBusy(true, submitButton);
+            try {
+                if (currentMode === "signup") {
+                    const { data, error } = await authClient.auth.signUp({
+                        email: document.querySelector("#email").value.trim(),
+                        password: password.value,
+                        options: { data: { full_name: document.querySelector("#full-name").value.trim() } }
+                    });
+                    if (error) throw error;
+                    if (data.session) await authClient.auth.signOut({ scope: "local" });
+                    pendingEmail = document.querySelector("#email").value.trim();
+                    document.querySelector("#otp-email").textContent = pendingEmail;
+                    form.hidden = true;
+                    document.querySelector("#otp-panel").hidden = false;
+                    document.querySelector("#mode-switch").hidden = true;
+                    document.querySelector("#otp-code").focus();
+                } else {
+                    const { error } = await authClient.auth.signInWithPassword({
+                        email: document.querySelector("#email").value.trim(),
+                        password: password.value
+                    });
+                    if (error) throw error;
+                    window.location.assign("index.html");
+                }
+            } catch (error) {
+                setMessage(message, error.message || "Không thể hoàn tất yêu cầu. Vui lòng thử lại.", true);
+            } finally {
+                busy = false;
+                submitButton.disabled = false;
+                submitButton.textContent = submitButton.dataset.label;
+            }
+        });
+
+        otpForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            if (busy || !authClient) return;
+            const button = document.querySelector("#verify-button");
+            button.dataset.label = "Xác minh email";
+            setBusy(true, button);
+            try {
+                const { error } = await authClient.auth.verifyOtp({
+                    email: pendingEmail,
+                    token: document.querySelector("#otp-code").value.trim(),
+                    type: "email"
+                });
+                if (error) throw error;
+                await authClient.auth.signOut({ scope: "local" });
+                document.querySelector("#email").value = pendingEmail;
+                document.querySelector("#password").value = "";
+                setMode("login");
+                setMessage(document.querySelector("#form-message"), "Email đã xác minh. Hãy đăng nhập bằng email và mật khẩu vừa tạo.");
+            } catch (error) {
+                setMessage(document.querySelector("#otp-message"), error.message || "Mã không hợp lệ hoặc đã hết hạn.", true);
+            } finally {
+                busy = false;
+                button.disabled = false;
+                button.textContent = button.dataset.label;
+            }
+        });
+
+        document.querySelector("#resend-code").addEventListener("click", async () => {
+            if (busy || !authClient) return;
+            const button = document.querySelector("#resend-code");
+            button.disabled = true;
+            try {
+                const { error } = await authClient.auth.resend({ type: "signup", email: pendingEmail });
+                if (error) throw error;
+                setMessage(document.querySelector("#otp-message"), "Mã xác minh mới đã được gửi.");
+            } catch (error) {
+                setMessage(document.querySelector("#otp-message"), error.message || "Không gửi lại được mã.", true);
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.querySelector("#cancel-verification").addEventListener("click", () => setMode("signup"));
+        document.querySelector("#social-button").addEventListener("click", () => {
+            setMessage(document.querySelector("#form-message"), "Đăng nhập Google chưa được cấu hình cho dự án này.", true);
+        });
+        })();
+    </script>
+</body>
+</html>
